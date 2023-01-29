@@ -1,0 +1,22 @@
+---
+hotkeys:
+  init_process_list: '<alt>+<ctrl>+l'
+  focus_character_1_window: '<shift>+1'
+  focus_character_2_window: '<shift>+2'
+  focus_character_3_window: '<shift>+3'
+  focus_character_4_window: '<shift>+4'
+  focus_character_5_window: '<shift>+5'
+  focus_character_6_window: '<shift>+6'
+  focus_character_7_window: '<shift>+7'
+  focus_character_8_window: '<shift>+8'
+  focus_next_character_window: '<shift>+c'
+  focus_previous_character_window: '<shift>+V'
+characters:
+  - 'Vermino'
+  - 'Espritsacri'
+  - 'Arag-Bolan'
+  - 'Thasadarenu'
+  - 'Kerrigeni'
+  - 'Papy-Yer'
+  - 'Papy-Yeuse'
+...
