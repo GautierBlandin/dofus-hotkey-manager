@@ -27,3 +27,11 @@ class AbstractDofusWindowManager(ABC):
     @abstractmethod
     def focus_previous_character_window(self) -> None:
         pass
+
+    @abstractmethod
+    def get_active_characters(self) -> list[str]:
+        pass
+
+    @abstractmethod
+    def get_active_character(self) -> str:
+        pass
