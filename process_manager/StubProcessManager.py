@@ -11,11 +11,11 @@ class StubProcessManager(AbstractProcessManager):
             return []
 
     def get_window_handles_from_pid(self, pid: int) -> list[int]:
-        return [10*pid, 10*pid+1, 10*pid+2, 10*pid+3]
+        return [10 * pid, 10 * pid + 1, 10 * pid + 2, 10 * pid + 3]
 
     def get_window_title_from_handle(self, hwnd: int) -> str:
         if hwnd % 10 == 2:
-            return f'Character{hwnd//10}'
+            return f'Character{hwnd // 10}'
         else:
             return f'Window{hwnd}'
 
