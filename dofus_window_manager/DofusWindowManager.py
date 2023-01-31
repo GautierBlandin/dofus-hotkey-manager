@@ -1,8 +1,8 @@
 import logging
 from typing import Callable
+import pynput
 
 import pythoncom
-
 
 from process_manager.AbstractProcessManager import AbstractProcessManager
 from process_manager.ProcessManager import ProcessManager
@@ -12,24 +12,13 @@ from dofus_window_manager.AbstractDofusWindowManager import AbstractDofusWindowM
 class DofusWindowManager(AbstractDofusWindowManager):
     """
     Class to manage Dofus windows
-
-    Attributes:
-        dofus_window_handles: dict[str, int]:
-            Dictionary of Dofus window handles, initialized with init_dofus_window_handles
-        process_manager: ProcessManager:
-            Process manager object that allows access to the system's processes and windows
-
-    Methods:
-        init_dofus_window_handles(character_names: list[str]) -> None:
-            Initializes the dofus_window_handles attribute
-        focus_character_window(character_name: str) -> None:
-            Focuses the window of the character with the given name
     """
 
     def __init__(self, character_names: list[str], process_manager: AbstractProcessManager = ProcessManager()):
         self.dofus_window_handles = None
         self.process_manager = process_manager
         self.character_names = character_names
+        self.active_characters = []
         self.last_focus = 0
         self.character_to_index = {character_names[i]: i for i in range(len(character_names))}
         self.index_to_character = {i: character_names[i] for i in range(len(character_names))}
@@ -43,6 +32,7 @@ class DofusWindowManager(AbstractDofusWindowManager):
             hwnd = self.process_manager.get_window_handle_from_title(character_name, process_list)
             if hwnd is not None:
                 print(f'Found window: {hwnd}')
+                self.active_characters.append(character_name)
             dofus_window_handles[character_name] = hwnd
         self.dofus_window_handles = dofus_window_handles
 
@@ -56,6 +46,7 @@ class DofusWindowManager(AbstractDofusWindowManager):
     def focus_character_window_maker(self, character_name: str) -> Callable[[], None]:
         def focus_character_window_instance() -> None:
             self.focus_character_window(character_name)
+
         return focus_character_window_instance
 
     def is_character_handle_defined(self, character_name: str) -> bool:
@@ -92,3 +83,11 @@ class DofusWindowManager(AbstractDofusWindowManager):
         self.last_focus = self.character_to_index[previous_character]
 
         self.focus_character_window(self.index_to_character[self.last_focus])
+
+    def get_active_characters(self) -> list[str]:
+        return self.active_characters
+
+    def get_active_character(self) -> str:
+        return self.index_to_character[self.last_focus]
+
+
