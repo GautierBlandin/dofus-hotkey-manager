@@ -1,8 +1,9 @@
-from pynput import keyboard
+from pynput import keyboard, mouse
 import yaml
 
 from dofus_window_manager.DofusWindowManager import DofusWindowManager
 from global_hotkeys.GlobalHotkeysArguments import GlobalHotkeysArguments
+from mouse_automation.MouseRepeater import MouseRepeater
 
 
 class GlobalHotkeysManager:
@@ -11,11 +12,13 @@ class GlobalHotkeysManager:
             try:
                 self.configuration = GlobalHotkeysArguments()
                 self.configuration.load_from_dict(yaml.safe_load(stream))
-                print(f'self.configuration: {self.configuration.characters}')
+                print(f'Registered characters: {self.configuration.characters}')
+                print(f'Registered hotkeys: {self.configuration.hotkeys.__dict__}')
             except yaml.YAMLError as exc:
                 raise exc
 
         self.dofus_window_manager = DofusWindowManager(self.configuration.characters)
+        self.mouse_repeater = MouseRepeater(self.dofus_window_manager)
 
     def build_global_hotkey_dict(self):
         """
@@ -25,6 +28,7 @@ class GlobalHotkeysManager:
             self.configuration.hotkeys.init_process_list: self.dofus_window_manager.init_dofus_window_handles,
             self.configuration.hotkeys.focus_next_character_window: self.dofus_window_manager.focus_next_character_window,
             self.configuration.hotkeys.focus_previous_character_window: self.dofus_window_manager.focus_previous_character_window,
+            self.configuration.hotkeys.toggle_click_repetition: self.mouse_repeater.toggle_active
         }
 
         # Bind the hotkeys for each character
@@ -38,7 +42,13 @@ class GlobalHotkeysManager:
 
     def start(self):
         global_hotkey_dict = self.build_global_hotkey_dict()
-        print(f'global_hotkey_dict: {global_hotkey_dict}')
-        listener = keyboard.GlobalHotKeys(self.build_global_hotkey_dict())
-        listener.start()
-        listener.join()
+        keyboard_listener = keyboard.GlobalHotKeys(global_hotkey_dict)
+        keyboard_listener.start()
+
+        mouse_listener = mouse.Listener(
+            on_click=self.mouse_repeater.on_click,
+        )
+
+        mouse_listener.start()
+        keyboard_listener.join()
+        mouse_listener.join()
