@@ -5,6 +5,11 @@ class StubDofusWindowManager(AbstractDofusWindowManager):
     """
     Stub class for dofus window manager
     """
+    def get_active_characters(self) -> list[str]:
+        return self.character_names
+
+    def get_active_character(self) -> str:
+        return self.character_names[0]
 
     def __init__(self, character_names: list[str]):
         self.initialized = False
