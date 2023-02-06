@@ -1,4 +1,4 @@
-from global_hotkeys.Suspender import Suspender
+from hotkey_managers.Suspender import Suspender
 
 
 def test_suspender():
