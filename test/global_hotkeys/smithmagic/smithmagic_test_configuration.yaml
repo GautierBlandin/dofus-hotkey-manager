@@ -1,5 +1,9 @@
 ---
 rune_positions:
+  fusion_x_position: 1000
+  fusion_y_position: 1000
+  fusion_all_x_position: 1000
+  fusion_all_y_position: 1000
   normal_column_x_axis_position: 1000
   pa_column_x_axis_position: 1100
   ra_column_x_axis_position: 1200
@@ -17,7 +21,7 @@ rune_positions:
   rune_12_y_axis_position: 100
   rune_13_y_axis_position: 100
 hotkeys:
-  toggle_smithmagic_hotkeys: '<alt>+<ctrl>+m' # smithmagic hotkeys are turned off by default
+  toggle_smithmagic_hotkeys: '<alt>+<ctrl>+m' # smithmagic_manager hotkeys are turned off by default
   rune_1: 'q'
   rune_2: 'w'
   rune_3: 'e'
@@ -33,4 +37,6 @@ hotkeys:
   rune_13: 'h'
   pa_modifier: '<shift>'
   ra_modifier: '<ctrl>'
+  fusion: '<space>'
+  fusion_all: '<shift>+<ctrl>+<space>'
 ...
