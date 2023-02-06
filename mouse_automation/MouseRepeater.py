@@ -1,19 +1,20 @@
 import pynput
 import time
 import pythoncom
-from abc import ABC, abstractmethod
+from typing import Protocol
+from abc import abstractmethod
 
 from dofus_window_manager.AbstractDofusWindowManager import AbstractDofusWindowManager
 
 
-class AbstractMouse(ABC):
+class AbstractMouse(Protocol):
     @abstractmethod
     def click(self, x: int, y: int):
-        pass
+        raise NotImplementedError
 
     @abstractmethod
     def right_click(self, x: int, y: int):
-        pass
+        raise NotImplementedError
 
 
 class MouseRepeater:
