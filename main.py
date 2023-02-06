@@ -1,3 +1,3 @@
 from global_hotkeys.GlobalHotkeyManager import GlobalHotkeysManager
 
-GlobalHotkeysManager('configuration.yaml').start()
+GlobalHotkeysManager('hotkeys_configuration.yaml').start()
