@@ -1,8 +1,7 @@
-from global_hotkeys.smithmagic.SmithmagicArguments import SmithmagicArguments
-
+from hotkey_managers.smithmagic_manager.SmithmagicArguments import SmithmagicArguments
 
 def test_smithmagic_arguments():
-    """Test smithmagic arguments."""
+    """Test smithmagic_manager arguments."""
     smithmagic_arguments = SmithmagicArguments()
     smithmagic_arguments.load_from_yaml('smithmagic_test_configuration.yaml')
     assert smithmagic_arguments.rune_positions.normal_column_x_axis_position == 1000
