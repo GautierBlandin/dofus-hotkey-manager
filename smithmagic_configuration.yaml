@@ -17,6 +17,7 @@ rune_positions:
   rune_12_y_axis_position: 100
   rune_13_y_axis_position: 100
 hotkeys:
+  enable_smithmagic_hotkeys: '<alt>+<ctrl>+m'
   rune_1: 'q'
   rune_2: 'w'
   rune_3: 'e'
