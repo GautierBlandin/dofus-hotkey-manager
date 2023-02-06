@@ -3,6 +3,7 @@ import yaml
 
 from dofus_window_manager.DofusWindowManager import DofusWindowManager
 from global_hotkeys.GlobalHotkeysArguments import GlobalHotkeysArguments
+from global_hotkeys.Suspender import Suspender
 from mouse_automation.MouseRepeater import MouseRepeater
 
 
@@ -19,16 +20,18 @@ class GlobalHotkeysManager:
 
         self.dofus_window_manager = DofusWindowManager(self.configuration.characters)
         self.mouse_repeater = MouseRepeater(self.dofus_window_manager)
+        self.suspender = Suspender()
 
     def build_global_hotkey_dict(self):
         """
         Build the dictionary of global hotkeys using the initialized configuration.
         """
         hotkey_dict = {
-            self.configuration.hotkeys.init_process_list: self.dofus_window_manager.init_dofus_window_handles,
-            self.configuration.hotkeys.focus_next_character_window: self.dofus_window_manager.focus_next_character_window,
-            self.configuration.hotkeys.focus_previous_character_window: self.dofus_window_manager.focus_previous_character_window,
-            self.configuration.hotkeys.toggle_click_repetition: self.mouse_repeater.toggle_active
+            self.configuration.hotkeys.suspend: self.suspender.toggle_suspended,
+            self.configuration.hotkeys.init_process_list: self.suspender.make_suspendable(self.dofus_window_manager.init_dofus_window_handles),
+            self.configuration.hotkeys.focus_next_character_window: self.suspender.make_suspendable(self.dofus_window_manager.focus_next_character_window),
+            self.configuration.hotkeys.focus_previous_character_window: self.suspender.make_suspendable(self.dofus_window_manager.focus_previous_character_window),
+            self.configuration.hotkeys.toggle_click_repetition: self.suspender.make_suspendable(self.mouse_repeater.toggle_active)
         }
 
         # Bind the hotkeys for each character
@@ -36,7 +39,7 @@ class GlobalHotkeysManager:
             if (i + 1) > 8:
                 raise Exception(f'Cannot bind more than 8 characters to hotkeys. {character} is not bound.')
             hotkey_dict[getattr(self.configuration.hotkeys, f'focus_character_{i + 1}_window')] =\
-                self.dofus_window_manager.focus_character_window_maker(character)
+                self.suspender.make_suspendable(self.dofus_window_manager.focus_character_window_maker(character))
 
         return hotkey_dict
 
