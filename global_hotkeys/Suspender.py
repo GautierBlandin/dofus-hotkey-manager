@@ -1,6 +1,6 @@
 class Suspender:
-    def __init__(self):
-        self.suspended = False
+    def __init__(self, suspended=False):
+        self.suspended = suspended
 
     def toggle_suspended(self):
         self.suspended = not self.suspended
