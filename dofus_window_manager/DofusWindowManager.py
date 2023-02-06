@@ -1,6 +1,5 @@
 import logging
 from typing import Callable
-import pynput
 
 import pythoncom
 
@@ -28,12 +27,14 @@ class DofusWindowManager(AbstractDofusWindowManager):
         pythoncom.CoInitialize()
         process_list = self.process_manager.get_process_ids_by_name("Dofus.exe")
         dofus_window_handles = {}
+        active_characters = []
         for character_name in self.character_names:
             hwnd = self.process_manager.get_window_handle_from_title(character_name, process_list)
             if hwnd is not None:
                 print(f'Found window: {hwnd}')
-                self.active_characters.append(character_name)
+                active_characters.append(character_name)
             dofus_window_handles[character_name] = hwnd
+        self.active_characters = active_characters
         self.dofus_window_handles = dofus_window_handles
 
     def focus_character_window(self, character_name: str) -> None:
@@ -89,5 +90,3 @@ class DofusWindowManager(AbstractDofusWindowManager):
 
     def get_active_character(self) -> str:
         return self.index_to_character[self.last_focus]
-
-
