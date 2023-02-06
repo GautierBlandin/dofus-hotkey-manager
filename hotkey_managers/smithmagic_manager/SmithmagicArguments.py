@@ -19,6 +19,8 @@ class SmithmagicHotkeys:
         self.rune_13: str = ''
         self.pa_modifier: str = ''
         self.ra_modifier: str = ''
+        self.fusion: str = ''
+        self.fusion_all: str = ''
 
     def load_from_dict(self, dict_to_load):
         for key, value in dict_to_load.items():
@@ -30,6 +32,10 @@ class SmithmagicScreenPositions:
         self.normal_column_x_axis_position: int = 0
         self.pa_column_x_axis_position: int = 0
         self.ra_column_x_axis_position: int = 0
+        self.fusion_x_position: int = 0
+        self.fusion_y_position: int = 0
+        self.fusion_all_x_position: int = 0
+        self.fusion_all_y_position: int = 0
         self.rune_1_y_axis_position: int = 0
         self.rune_2_y_axis_position: int = 0
         self.rune_3_y_axis_position: int = 0
@@ -60,6 +66,7 @@ class SmithmagicArguments:
                 self.hotkeys.load_from_dict(value)
             if key == 'rune_positions':
                 self.rune_positions.load_from_dict(value)
+        return self
 
     def load_from_yaml(self, yaml_config_path: str):
         with open(yaml_config_path, "r") as stream:
@@ -67,3 +74,4 @@ class SmithmagicArguments:
                 self.load_from_dict(yaml.safe_load(stream))
             except yaml.YAMLError as exc:
                 print(exc)
+        return self
