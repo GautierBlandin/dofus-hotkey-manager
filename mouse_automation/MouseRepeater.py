@@ -7,7 +7,7 @@ from abc import abstractmethod
 from dofus_window_manager.AbstractDofusWindowManager import AbstractDofusWindowManager
 
 
-class AbstractMouse(Protocol):
+class IMouse(Protocol):
     @abstractmethod
     def click(self, x: int, y: int):
         raise NotImplementedError
@@ -18,7 +18,7 @@ class AbstractMouse(Protocol):
 
 
 class MouseRepeater:
-    def __init__(self, dofus_window_manager: AbstractDofusWindowManager, mouse: AbstractMouse, repeat_interval: float = 0.1):
+    def __init__(self, dofus_window_manager: AbstractDofusWindowManager, mouse: IMouse, repeat_interval: float = 0.1):
         self.dofus_window_manager = dofus_window_manager
         self.controller = pynput.mouse.Controller()
         self.active: bool = False
