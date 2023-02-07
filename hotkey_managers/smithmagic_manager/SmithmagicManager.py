@@ -28,7 +28,7 @@ class SmithmagicManager(AbstractManager):
     def _build_hotkey_string(self, sub_hotkeys_string: list[str]):
         return '+'.join(sub_hotkeys_string)
 
-    def _create_hotkey_dictionary(self):
+    def create_hotkey_dictionary(self):
         hotkey_dict: dict[str, Callable[[], None]] = {
             self.configuration.hotkeys.toggle_smithmagic_hotkeys: self.suspender.toggle_suspended,
             self.configuration.hotkeys.fusion: self.suspender.make_suspendable(make_caller(
@@ -76,7 +76,7 @@ class SmithmagicManager(AbstractManager):
         return hotkey_dict
 
     def get_listeners(self) -> list[threading.Thread]:
-        hotkey_dict = self._create_hotkey_dictionary()
+        hotkey_dict = self.create_hotkey_dictionary()
         keyboard_listener = keyboard.GlobalHotKeys(hotkey_dict)
 
         return [keyboard_listener]
