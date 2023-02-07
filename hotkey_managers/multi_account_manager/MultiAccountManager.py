@@ -5,12 +5,12 @@ import threading
 from dofus_window_manager.DofusWindowManager import DofusWindowManager
 from hotkey_managers.multi_account_manager.MultiAccountArguments import GlobalHotkeysArguments
 from hotkey_managers.Suspender import Suspender
-from mouse_automation.MouseRepeater import MouseRepeater, AbstractMouse
+from mouse_automation.MouseRepeater import MouseRepeater, IMouse
 from hotkey_managers.AbstrasctManager import AbstractManager
 
 
 class MultiAccountHotkeysManager(AbstractManager):
-    def __init__(self, yaml_config_path: str, abstract_mouse: AbstractMouse):
+    def __init__(self, yaml_config_path: str, abstract_mouse: IMouse):
         with open(yaml_config_path, "r") as stream:
             try:
                 self.configuration = GlobalHotkeysArguments()
