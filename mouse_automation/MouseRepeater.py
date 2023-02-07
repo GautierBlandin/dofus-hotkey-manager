@@ -1,30 +1,30 @@
 import pynput
 import time
 import pythoncom
-import win32api, win32con
+from typing import Protocol
+from abc import abstractmethod
 
 from dofus_window_manager.AbstractDofusWindowManager import AbstractDofusWindowManager
 
 
-def click(x, y):
-    win32api.SetCursorPos((x, y))
-    win32api.mouse_event(win32con.MOUSEEVENTF_LEFTDOWN, x, y, 0, 0)
-    win32api.mouse_event(win32con.MOUSEEVENTF_LEFTUP, x, y, 0, 0)
+class IMouse(Protocol):
+    @abstractmethod
+    def click(self, x: int, y: int):
+        raise NotImplementedError
 
-
-def right_click(x, y):
-    win32api.SetCursorPos((x, y))
-    win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTDOWN, x, y, 0, 0)
-    win32api.mouse_event(win32con.MOUSEEVENTF_RIGHTUP, x, y, 0, 0)
+    @abstractmethod
+    def right_click(self, x: int, y: int):
+        raise NotImplementedError
 
 
 class MouseRepeater:
-    def __init__(self, dofus_window_manager: AbstractDofusWindowManager, repeat_interval: float = 0.1):
+    def __init__(self, dofus_window_manager: AbstractDofusWindowManager, mouse: IMouse, repeat_interval: float = 0.1):
         self.dofus_window_manager = dofus_window_manager
         self.controller = pynput.mouse.Controller()
         self.active: bool = False
         self.clicking: bool = False
-        self.repeat_interval: float = 0.1
+        self.repeat_interval: float = repeat_interval
+        self.mouse = mouse
 
     def set_active(self):
         self.active = True
@@ -48,11 +48,10 @@ class MouseRepeater:
             time.sleep(self.repeat_interval)
             self.dofus_window_manager.focus_next_character_window()
             time.sleep(0.1)
-            print(f'hello {x} {y}')
             if button == pynput.mouse.Button.left:
-                click(x, y)
+                self.mouse.click(x, y)
             elif button == pynput.mouse.Button.right:
-                right_click(x, y)
+                self.mouse.right_click(x, y)
         time.sleep(self.repeat_interval)
         self.dofus_window_manager.focus_next_character_window()
         self.set_clicking(False)

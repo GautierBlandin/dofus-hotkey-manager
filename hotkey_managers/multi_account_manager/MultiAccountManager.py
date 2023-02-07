@@ -1,14 +1,16 @@
 from pynput import keyboard, mouse
 import yaml
+import threading
 
 from dofus_window_manager.DofusWindowManager import DofusWindowManager
-from global_hotkeys.GlobalHotkeysArguments import GlobalHotkeysArguments
-from global_hotkeys.Suspender import Suspender
-from mouse_automation.MouseRepeater import MouseRepeater
+from hotkey_managers.multi_account_manager.MultiAccountArguments import GlobalHotkeysArguments
+from hotkey_managers.Suspender import Suspender
+from mouse_automation.MouseRepeater import MouseRepeater, IMouse
+from hotkey_managers.AbstrasctManager import AbstractManager
 
 
-class GlobalHotkeysManager:
-    def __init__(self, yaml_config_path: str):
+class MultiAccountHotkeysManager(AbstractManager):
+    def __init__(self, yaml_config_path: str, abstract_mouse: IMouse):
         with open(yaml_config_path, "r") as stream:
             try:
                 self.configuration = GlobalHotkeysArguments()
@@ -19,7 +21,7 @@ class GlobalHotkeysManager:
                 raise exc
 
         self.dofus_window_manager = DofusWindowManager(self.configuration.characters)
-        self.mouse_repeater = MouseRepeater(self.dofus_window_manager)
+        self.mouse_repeater = MouseRepeater(self.dofus_window_manager, abstract_mouse)
         self.suspender = Suspender()
 
     def build_global_hotkey_dict(self):
@@ -43,15 +45,12 @@ class GlobalHotkeysManager:
 
         return hotkey_dict
 
-    def start(self):
+    def get_listeners(self) -> list[threading.Thread]:
         global_hotkey_dict = self.build_global_hotkey_dict()
         keyboard_listener = keyboard.GlobalHotKeys(global_hotkey_dict)
-        keyboard_listener.start()
 
         mouse_listener = mouse.Listener(
             on_click=self.mouse_repeater.on_click,
         )
 
-        mouse_listener.start()
-        keyboard_listener.join()
-        mouse_listener.join()
+        return [mouse_listener, keyboard_listener]
