@@ -7,6 +7,7 @@ from hotkey_managers.multi_account_manager.MultiAccountArguments import GlobalHo
 from hotkey_managers.Suspender import Suspender
 from mouse_automation.MouseRepeater import MouseRepeater, IMouse
 from hotkey_managers.AbstrasctManager import AbstractManager
+import hotkey.GlobalHotkeyListener
 
 
 class MultiAccountHotkeysManager(AbstractManager):
@@ -22,7 +23,7 @@ class MultiAccountHotkeysManager(AbstractManager):
 
         self.dofus_window_manager = DofusWindowManager(self.configuration.characters)
         self.mouse_repeater = MouseRepeater(self.dofus_window_manager, abstract_mouse)
-        self.suspender = Suspender()
+        self.suspender = Suspender(True)
 
     def build_global_hotkey_dict(self):
         """
@@ -47,7 +48,7 @@ class MultiAccountHotkeysManager(AbstractManager):
 
     def get_listeners(self) -> list[threading.Thread]:
         global_hotkey_dict = self.build_global_hotkey_dict()
-        keyboard_listener = keyboard.GlobalHotKeys(global_hotkey_dict)
+        keyboard_listener = hotkey.GlobalHotkeyListener.GlobalHotkeyListener(global_hotkey_dict)
 
         mouse_listener = mouse.Listener(
             on_click=self.mouse_repeater.on_click,
