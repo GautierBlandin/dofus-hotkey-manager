@@ -8,12 +8,14 @@ from hotkey_managers.Suspender import Suspender
 from mouse_automation.mouse.Mouse import IMouse
 from mouse_automation.MouseRepeater import MouseRepeater
 from mouse_automation.MouseCoordPrinter import MouseCoordPrinter
+from keyboard_automation.Keyboard import IKeyboard
+from keyboard_automation.Traveler import Traveler
 from hotkey_managers.AbstrasctManager import AbstractManager
 import hotkey.GlobalHotkeyListener
 
 
 class MultiAccountHotkeysManager(AbstractManager):
-    def __init__(self, yaml_config_path: str, abstract_mouse: IMouse):
+    def __init__(self, yaml_config_path: str, abstract_mouse: IMouse, abstract_keyboard: IKeyboard):
         with open(yaml_config_path, "r") as stream:
             try:
                 self.configuration = GlobalHotkeysArguments()
@@ -26,6 +28,7 @@ class MultiAccountHotkeysManager(AbstractManager):
         self.dofus_window_manager = DofusWindowManager(self.configuration.characters)
         self.mouse_repeater = MouseRepeater(self.dofus_window_manager, abstract_mouse)
         self.mouse_coord_printer = MouseCoordPrinter()
+        self.traveler = Traveler(self.dofus_window_manager, keyboard = abstract_keyboard)
         self.suspender = Suspender(True)
 
     def build_global_hotkey_dict(self):
@@ -38,7 +41,8 @@ class MultiAccountHotkeysManager(AbstractManager):
             self.configuration.hotkeys.focus_next_character_window: self.suspender.make_suspendable(self.dofus_window_manager.focus_next_character_window),
             self.configuration.hotkeys.focus_previous_character_window: self.suspender.make_suspendable(self.dofus_window_manager.focus_previous_character_window),
             self.configuration.hotkeys.toggle_click_repetition: self.suspender.make_suspendable(self.mouse_repeater.toggle_active),
-            self.configuration.hotkeys.toggle_mouse_coord_printing: self.suspender.make_suspendable(self.mouse_coord_printer.toggle_active)
+            self.configuration.hotkeys.toggle_mouse_coord_printing: self.suspender.make_suspendable(self.mouse_coord_printer.toggle_active),
+            self.configuration.hotkeys.travel: self.suspender.make_suspendable(self.traveler.get_input),
         }
 
         # Bind the hotkeys for each character

@@ -13,6 +13,7 @@ hotkeys:
   focus_previous_character_window: '<shift>+c'
   toggle_click_repetition: '<ctrl>+<shift>+r'
   toggle_mouse_coord_printing: '<ctrl>+<alt>+m'
+  travel: '<ctrl>+<alt>+d'
   suspend: '<ctrl>+<shift>+s'
 characters:
   - 'Gaemo'

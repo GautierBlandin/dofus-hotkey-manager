@@ -19,6 +19,7 @@ class HotkeysDefinition:
         self.focus_previous_character_window: str = '<ctrl>+<alt>+p'
         self.toggle_click_repetition: str = '<ctrl>+<alt>+r'
         self.toggle_mouse_coord_printing: str = '<ctrl>+<alt>+m'
+        self.travel: str = '<ctrl>+<alt>+d'
         self.suspend: str = '<ctrl>+<alt>+s'
 
     def load_from_dict(self, dict_to_load):

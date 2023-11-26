@@ -29,6 +29,7 @@ class MouseRepeater:
         self.clicking = clicking
 
     def repeat_click_all_active_characters(self, x: int, y: int, button: pynput.mouse.Button, count: int):
+        # Avoid self-triggering by setting clicking to True
         self.set_clicking(True)
         time.sleep(0.5)
         for i in range(len(self.dofus_window_manager.get_active_characters()) - 1):
