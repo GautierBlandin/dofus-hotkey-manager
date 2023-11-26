@@ -25,7 +25,7 @@ class MultiAccountHotkeysManager(AbstractManager):
 
         self.dofus_window_manager = DofusWindowManager(self.configuration.characters)
         self.mouse_repeater = MouseRepeater(self.dofus_window_manager, abstract_mouse)
-        self.mouse_coord_printer = MouseCoordPrinter(abstract_mouse)
+        self.mouse_coord_printer = MouseCoordPrinter()
         self.suspender = Suspender(True)
 
     def build_global_hotkey_dict(self):
