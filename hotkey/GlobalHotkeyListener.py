@@ -8,6 +8,7 @@ import keycode
 class GlobalHotkeyListener(Listener):
     def __init__(self, hotkey_dict: dict[str, Callable[[], None]]):
         self.hotkeys = self.parse_dict(hotkey_dict)
+        self.input_suspended = False
         super().__init__(on_press=self.on_press, on_release=self.on_release)
 
     @staticmethod
@@ -34,11 +35,21 @@ class GlobalHotkeyListener(Listener):
         return vk
 
     def on_press(self, key):
+        if self.input_suspended:
+            return
         vk = self.preprocess_key(key)
         for hotkey in self.hotkeys:
             hotkey.press(vk)
 
     def on_release(self, key):
+        if self.input_suspended:
+            return
         vk = self.preprocess_key(key)
         for hotkey in self.hotkeys:
             hotkey.release(vk)
+
+    def suspend_input(self):
+        self.input_suspended = True
+
+    def resume_input(self):
+        self.input_suspended = False
