@@ -58,6 +58,11 @@ class MultiAccountHotkeysManager(AbstractManager):
         global_hotkey_dict = self.build_global_hotkey_dict()
         keyboard_listener = hotkey.GlobalHotkeyListener.GlobalHotkeyListener(global_hotkey_dict)
 
+        # For keyboard listeners, we need to set the suspend and resume input
+        # functions to avoid sending input while using the keyboard.
+        self.traveler.set_suspend_input(keyboard_listener.suspend_input)
+        self.traveler.set_resume_input(keyboard_listener.resume_input)
+
         mouse_repeater_listener = mouse.Listener(
             on_click=self.mouse_repeater.on_click,
         )

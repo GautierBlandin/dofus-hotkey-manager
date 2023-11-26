@@ -38,6 +38,7 @@ class GlobalHotkeyListener(Listener):
         if self.input_suspended:
             return
         vk = self.preprocess_key(key)
+        print(f'Pressed: {key}')
         for hotkey in self.hotkeys:
             hotkey.press(vk)
 
@@ -45,11 +46,14 @@ class GlobalHotkeyListener(Listener):
         if self.input_suspended:
             return
         vk = self.preprocess_key(key)
+        print(f'Released: {key}')
         for hotkey in self.hotkeys:
             hotkey.release(vk)
 
     def suspend_input(self):
+        print('Keyboard Input suspended')
         self.input_suspended = True
 
     def resume_input(self):
+        print('Keyboard Input resumed')
         self.input_suspended = False
