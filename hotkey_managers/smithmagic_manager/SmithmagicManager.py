@@ -3,6 +3,7 @@ from abc import abstractmethod
 import threading
 from pynput import keyboard
 
+import hotkey.GlobalHotkeyListener
 from hotkey_managers.Suspender import Suspender
 from hotkey_managers.smithmagic_manager.SmithmagicArguments import SmithmagicArguments
 from decorators.common import make_caller
@@ -77,6 +78,6 @@ class SmithmagicManager(AbstractManager):
 
     def get_listeners(self) -> list[threading.Thread]:
         hotkey_dict = self.create_hotkey_dictionary()
-        keyboard_listener = keyboard.GlobalHotKeys(hotkey_dict)
+        keyboard_listener = hotkey.GlobalHotkeyListener.GlobalHotkeyListener(hotkey_dict)
 
         return [keyboard_listener]

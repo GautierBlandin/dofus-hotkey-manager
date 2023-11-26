@@ -5,8 +5,11 @@ import threading
 from dofus_window_manager.DofusWindowManager import DofusWindowManager
 from hotkey_managers.multi_account_manager.MultiAccountArguments import GlobalHotkeysArguments
 from hotkey_managers.Suspender import Suspender
-from mouse_automation.MouseRepeater import MouseRepeater, IMouse
+from mouse_automation.mouse.Mouse import IMouse
+from mouse_automation.MouseRepeater import MouseRepeater
+from mouse_automation.MouseCoordPrinter import MouseCoordPrinter
 from hotkey_managers.AbstrasctManager import AbstractManager
+import hotkey.GlobalHotkeyListener
 
 
 class MultiAccountHotkeysManager(AbstractManager):
@@ -22,7 +25,8 @@ class MultiAccountHotkeysManager(AbstractManager):
 
         self.dofus_window_manager = DofusWindowManager(self.configuration.characters)
         self.mouse_repeater = MouseRepeater(self.dofus_window_manager, abstract_mouse)
-        self.suspender = Suspender()
+        self.mouse_coord_printer = MouseCoordPrinter(abstract_mouse)
+        self.suspender = Suspender(True)
 
     def build_global_hotkey_dict(self):
         """
@@ -33,7 +37,8 @@ class MultiAccountHotkeysManager(AbstractManager):
             self.configuration.hotkeys.init_process_list: self.suspender.make_suspendable(self.dofus_window_manager.init_dofus_window_handles),
             self.configuration.hotkeys.focus_next_character_window: self.suspender.make_suspendable(self.dofus_window_manager.focus_next_character_window),
             self.configuration.hotkeys.focus_previous_character_window: self.suspender.make_suspendable(self.dofus_window_manager.focus_previous_character_window),
-            self.configuration.hotkeys.toggle_click_repetition: self.suspender.make_suspendable(self.mouse_repeater.toggle_active)
+            self.configuration.hotkeys.toggle_click_repetition: self.suspender.make_suspendable(self.mouse_repeater.toggle_active),
+            self.configuration.hotkeys.toggle_mouse_coord_printing: self.suspender.make_suspendable(self.mouse_coord_printer.toggle_active)
         }
 
         # Bind the hotkeys for each character
@@ -47,10 +52,14 @@ class MultiAccountHotkeysManager(AbstractManager):
 
     def get_listeners(self) -> list[threading.Thread]:
         global_hotkey_dict = self.build_global_hotkey_dict()
-        keyboard_listener = keyboard.GlobalHotKeys(global_hotkey_dict)
+        keyboard_listener = hotkey.GlobalHotkeyListener.GlobalHotkeyListener(global_hotkey_dict)
 
-        mouse_listener = mouse.Listener(
+        mouse_repeater_listener = mouse.Listener(
             on_click=self.mouse_repeater.on_click,
         )
 
-        return [mouse_listener, keyboard_listener]
+        mouse_printer_listener = mouse.Listener(
+            on_click=self.mouse_coord_printer.on_click,
+        )
+
+        return [mouse_repeater_listener, keyboard_listener, mouse_printer_listener]
