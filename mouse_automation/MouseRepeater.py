@@ -1,21 +1,9 @@
 import pynput
 import time
 import pythoncom
-from typing import Protocol
-from abc import abstractmethod
+from mouse_automation.mouse.Mouse import IMouse
 
 from dofus_window_manager.AbstractDofusWindowManager import AbstractDofusWindowManager
-
-
-class IMouse(Protocol):
-    @abstractmethod
-    def click(self, x: int, y: int):
-        raise NotImplementedError
-
-    @abstractmethod
-    def right_click(self, x: int, y: int):
-        raise NotImplementedError
-
 
 class MouseRepeater:
     def __init__(self, dofus_window_manager: AbstractDofusWindowManager, mouse: IMouse, repeat_interval: float = 0.1):
@@ -59,6 +47,7 @@ class MouseRepeater:
     def on_click(self, x, y, button, pressed):
         if self.clicking:
             return
+        # Ensure pythoncom is initialized in the current thread before
         pythoncom.CoInitialize()
         if not self.active:
             return
