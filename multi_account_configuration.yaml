@@ -12,14 +12,15 @@ hotkeys:
   focus_next_character_window: '<shift>+v'
   focus_previous_character_window: '<shift>+c'
   toggle_click_repetition: '<ctrl>+<shift>+r'
+  toggle_mouse_coord_printing: '<ctrl>+<alt>+m'
   suspend: '<ctrl>+<shift>+s'
 characters:
   - 'Gaemo'
   - 'Wenrys'
   - 'Orosic'
+  - 'Gerrin'
   - 'Rikia'
   - 'Nasyra'
   - 'Mylorina'
   - 'Rakella'
-  - 'Gerrin'
 ...
