@@ -1,5 +1,16 @@
 import win32api
 import win32con
+from typing import Protocol
+from abc import abstractmethod
+
+class IMouse(Protocol):
+    @abstractmethod
+    def click(self, x: int, y: int):
+        raise NotImplementedError
+
+    @abstractmethod
+    def right_click(self, x: int, y: int):
+        raise NotImplementedError
 
 
 class Mouse:
