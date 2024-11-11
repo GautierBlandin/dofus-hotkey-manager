@@ -8,7 +8,6 @@ from dofus_window_manager.AbstractDofusWindowManager import AbstractDofusWindowM
 class MouseRepeater:
     def __init__(self, dofus_window_manager: AbstractDofusWindowManager, mouse: IMouse, repeat_interval: float = 0.1):
         self.dofus_window_manager = dofus_window_manager
-        self.controller = pynput.mouse.Controller()
         self.active: bool = False
         self.clicking: bool = False
         self.repeat_interval: float = repeat_interval
@@ -30,6 +29,7 @@ class MouseRepeater:
         self.clicking = clicking
 
     def repeat_click_all_active_characters(self, x: int, y: int, button: pynput.mouse.Button, count: int):
+        # Avoid self-triggering by setting clicking to True
         self.set_clicking(True)
         time.sleep(0.5)
         for i in range(len(self.dofus_window_manager.get_active_characters()) - 1):

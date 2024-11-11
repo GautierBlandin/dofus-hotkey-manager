@@ -1,25 +1,48 @@
 ---
 rune_positions:
-  fusion_x_position: 1050
-  fusion_y_position: 243
-  fusion_all_x_position: 852
-  fusion_all_y_position: 243
-  normal_column_x_axis_position: 1113
-  pa_column_x_axis_position: 1162
-  ra_column_x_axis_position: 1213
-  rune_1_y_axis_position: 341
-  rune_2_y_axis_position: 378
-  rune_3_y_axis_position: 418
-  rune_4_y_axis_position: 456
-  rune_5_y_axis_position: 495
-  rune_6_y_axis_position: 535
-  rune_7_y_axis_position: 572
-  rune_8_y_axis_position: 612
-  rune_9_y_axis_position: 649
-  rune_10_y_axis_position: 685
-  rune_11_y_axis_position: 726
-  rune_12_y_axis_position: 766
-  rune_13_y_axis_position: 801
+#  Position on standard screen
+#  fusion_x_position: 1050
+#  fusion_y_position: 243
+#  fusion_all_x_position: 852
+#  fusion_all_y_position: 243
+#  normal_column_x_axis_position: 1113
+#  pa_column_x_axis_position: 1162
+#  ra_column_x_axis_position: 1213
+#  rune_1_y_axis_position: 341
+#  rune_2_y_axis_position: 378
+#  rune_3_y_axis_position: 418
+#  rune_4_y_axis_position: 456
+#  rune_5_y_axis_position: 495
+#  rune_6_y_axis_position: 535
+#  rune_7_y_axis_position: 572
+#  rune_8_y_axis_position: 612
+#  rune_9_y_axis_position: 649
+#  rune_10_y_axis_position: 685
+#  rune_11_y_axis_position: 726
+#  rune_12_y_axis_position: 766
+#  rune_13_y_axis_position: 801
+
+# Position on ultrawide screen
+  fusion_x_position: 2687
+  fusion_y_position: 317
+  fusion_all_x_position: 2412
+  fusion_all_y_position: 317
+  normal_column_x_axis_position: 2769
+  pa_column_x_axis_position: 2835
+  ra_column_x_axis_position: 2901
+  rune_1_y_axis_position: 451
+  rune_2_y_axis_position: 507
+  rune_3_y_axis_position: 560
+  rune_4_y_axis_position: 616
+  rune_5_y_axis_position: 661
+  rune_6_y_axis_position: 717
+  rune_7_y_axis_position: 768
+  rune_8_y_axis_position: 828
+  rune_9_y_axis_position: 879
+  rune_10_y_axis_position: 930
+  rune_11_y_axis_position: 983
+  rune_12_y_axis_position: 1034
+  rune_13_y_axis_position: 1076
 hotkeys:
   toggle_smithmagic_hotkeys: '<alt>+<ctrl>+m' # smithmagic_manager hotkeys are turned off by default
   rune_1: 'q'
