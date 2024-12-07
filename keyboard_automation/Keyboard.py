@@ -31,13 +31,10 @@ class Keyboard:
     def release_keys(self, key: str | Key):
         self.keyboard.release(key)
 
-
     def press_enter(self):
         self.keyboard.press(Key.enter)
         self.keyboard.release(Key.enter)
 
     def enter_chat(self):
-        self.keyboard.press(Key.shift)
-        self.keyboard.press(Key.enter)
-        self.keyboard.release(Key.enter)
-        self.keyboard.release(Key.shift)
+        self.keyboard.press(Key.tab)
+        self.keyboard.release(Key.tab)
