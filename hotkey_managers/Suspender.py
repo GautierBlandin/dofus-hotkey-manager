@@ -6,6 +6,11 @@ class Suspender:
         self.suspended = suspended
 
     def toggle_suspended(self) -> None:
+        next_suspended_state = not self.suspended
+        if next_suspended_state:
+            print('Hotkeys are now suspended')
+        else:
+            print('Hotkeys are now active')
         self.suspended = not self.suspended
 
     def set_suspended(self, suspended: bool) -> None:
