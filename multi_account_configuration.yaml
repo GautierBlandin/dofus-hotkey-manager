@@ -16,12 +16,12 @@ hotkeys:
   travel: '<ctrl>+<alt>+d'
   suspend: '<ctrl>+<shift>+s'
 characters:
-  - 'Mylorina'
-  - 'Wenrys'
-  - 'Gaemo'
   - 'Gerrin'
-  - 'Orosic'
+  - 'Gaemo'
+  - 'Wenrys'
   - 'Rikielle'
-  - 'Rakella'
   - 'Nasyra'
+  - 'Orosic'
+  - 'Mylorina'
+  - 'Rakella'
 ...
