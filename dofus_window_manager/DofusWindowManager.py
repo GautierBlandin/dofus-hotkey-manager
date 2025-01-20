@@ -41,7 +41,10 @@ class DofusWindowManager(AbstractDofusWindowManager):
         if self.dofus_window_handles[character_name] is None:
             logging.error(f'Character {character_name} window not found')
         else:
-            self.process_manager.set_foreground_window(self.dofus_window_handles[character_name])
+            try:
+                self.process_manager.set_foreground_window(self.dofus_window_handles[character_name])
+            except:
+                print(f'Unable to make {character_name} window active. Make sure it has not been closed.')
             self.last_focus = self.character_to_index[character_name]
 
     def focus_character_window_maker(self, character_name: str) -> Callable[[], None]:
